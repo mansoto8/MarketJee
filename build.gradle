@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+	    maven { url 'https://repository.jboss.org/nexus/content/groups/public-jboss' }  
+	    maven { url 'https://repository.jboss.org/nexus/content/repositories' }  
+	    maven { url 'https://repository.jboss.org/nexus/content/repositories/thirdparty-releases' }
+    }
+
+}
+
+allprojects {
+	// add eclipse plugin for all projects
+	apply plugin: "eclipse"
+    
+	version = "0.1-SNAPSHOT"
+}
+
+subprojects {	
+
+    apply plugin: "java"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+    	// JEE 6 API       
+       	// use concrete API to avoid 'java.lang.ClassFormatError: Absent Code attribut...'
+        compile				'org.jboss.spec:jboss-javaee-6.0:1.0.0.Final'
+        
+        // Logging
+		compile 			'org.slf4j:slf4j-api:1.7.7',
+		 					'org.slf4j:jcl-over-slf4j:1.7.7',
+							'org.slf4j:jul-to-slf4j:1.7.7',
+	    					'org.slf4j:slf4j-log4j12:1.7.7',
+	    					'log4j:log4j:1.2.17'
+	    						    					
+	    // Testing
+	    testCompile			'junit:junit:4.11',
+	    					'org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain:2.1.0',
+	    					'org.jboss.arquillian:arquillian-bom:1.1.2.Final-wildfly-1',
+	    					'org.jboss.arquillian.junit:arquillian-junit-container:1.1.2.Final-wildfly-1'
+	    
+	    testRuntime 		'org.jboss.logging:jboss-logging:3.1.4.GA'
+    						// Embedded means it runs in the same JVM, it still needs the full installation  
+     						//'org.wildfly:wildfly-arquillian-container-embedded:8.0.0.Final' 
+    }
+
+}

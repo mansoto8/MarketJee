@@ -1,0 +1,1 @@
+include 'marketapp.ejb','marketapp.web','marketapp.ear'
